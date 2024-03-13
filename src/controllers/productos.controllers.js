@@ -70,3 +70,27 @@ export const editarProducto = async (req, res) => {
         })
     }
 }
+
+export const borrarProducto = async (req, res) => {
+    try {
+        //extraer el id y buscar el producto
+        //si no encuentro el id responder con un mensaje de error
+        const buscarProducto = await Producto.findById(req.params.id)
+        if (!buscarProducto) {
+            return res.status(404).json({
+                mensaje: "No se pudo eliminar el producto, el id es incorrecto"
+            })
+        }
+        //pedir a la DB modificar el producto que tiene tal id, con los datos de req.body
+        await Producto.findByIdAndDelete(req.params.id)
+        //contestar con un mensaje de que todo salió bien
+        res.status(200).json({
+            mensaje: "El producto fue eliminado exitosamente"
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            mensaje: "Ocurrió un error al intentar eliminar el producto"
+        })
+    }
+}
