@@ -11,7 +11,20 @@ export const listarProductos = async (req, res) => {
             mensaje: "No se pudo encontrar la lista de productos"
         })
     }
+}
 
+export const obtenerProducto = async (req, res) =>{
+    try {
+        console.log(req.params.id)
+        //si encontre el producto
+        const productoBuscado = await Producto.findById(req.params.id)
+        res.status(200).json(productoBuscado)
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({
+            mensaje: "No se encontró el producto solicitado"
+        })
+    }
 }
 
 export const crearProducto = async (req, res) => {
