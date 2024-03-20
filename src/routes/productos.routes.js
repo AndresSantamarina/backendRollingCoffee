@@ -6,14 +6,14 @@ import {
   listarProductos,
   obtenerProducto,
 } from "../controllers/productos.controllers.js";
-import { check } from "express-validator";
+import validacionesProducto from "../helpers/validacionProducto.js";
 
 const router = Router();
 
 router
   .route("/productos")
   .get(listarProductos)
-  .post(crearProducto);
+  .post([validacionesProducto], crearProducto);
 router
   .route("/producto/:id")
   .get(obtenerProducto)
